@@ -1,12 +1,18 @@
 <template>
-  <hooper ref="carousel" style="height: auto" :settings="hooperSettings">
-    <slide v-for="i in 4" :key="i">
-      <div>
-        <img :src="`./carousel/${i}.jpg`" />
-      </div>
-    </slide>
-    <pagination slot="hooper-addons"></pagination>
-  </hooper>
+  <div class="carousel-wrapper -mx-3">
+    <hooper ref="carousel" style="height: auto" :settings="hooperSettings">
+      <slide v-for="i in 4" :key="i">
+        <div>
+          <img :src="`./carousel/${i}.jpg`" />
+        </div>
+      </slide>
+      <pagination
+        slot="hooper-addons"
+        :class="{ number: isNumberPage }"
+        :mode="isNumberPage ? 'fraction' : 'indicator'"
+      ></pagination>
+    </hooper>
+  </div>
 </template>
 
 <script>
@@ -19,6 +25,9 @@ export default {
     Hooper,
     Slide,
     Pagination,
+  },
+  props: {
+    isNumberPage: Boolean,
   },
   data() {
     return {
@@ -33,8 +42,17 @@ export default {
 </script>
 
 <style lang="scss">
-li:focus,
-button:focus {
-  outline: none;
+.carousel-wrapper :focus {
+  outline: none !important;
+}
+
+.hooper-pagination {
+  &.number {
+    background: white;
+    border-radius: 8px;
+    color: #333333;
+    right: 5%;
+    bottom: 8px;
+  }
 }
 </style>
